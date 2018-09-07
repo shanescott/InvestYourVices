@@ -1,47 +1,42 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Thought Clear</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="main.js"></script>
-    
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>repl.it</title>
+	<link href="index.css" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Raleway:300" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  
 </head>
+
 <body>
-    <script src="https://sdk.scdn.co/spotify-player.js">
-    //Spotify SDK handling
-    window.onSpotifyWebPlaybackSDKReady = () => {
-        const token = 'BQBwqm-ZpJ3q9uSa-0h9TwwuZjteSsG_oaW0T-rSYaI3APHtx5wq8kuGA145Iu8srXmwsR46dEJlks5qiyyFHo2Ez2-6RO7oc7Q55lAvacM5BV-Q_tPhekdqu0MdX6C9l6bTnaxgbVyn61uyshfTHiQUBOY_CkBIypMRlQ';
-        const player = new Spotify.Player({
-            name: 'Web Playback SDK Quick Start Player',
-            getOAuthToken: cb => { cb(token); }
-        });
+	<header class="logo-container">
+		<h1>See what your daily spending could earn you in the stock market</h1>
+		<h2>Below you will find daily "vices", pick yours and we'll show you how much you could've made in the last year with popular stocks!</h2>
+	</header>
+	<div class="choices-container js-choices-container">
+		<ul class="choice-list"></ul>
+	</div>
 
-        //error handling
-        player.addListener('initialization_error', ({ message }) => { console.error(message); });
-        player.addListener('authentication_error', ({ message }) => { console.error(message); });
-        player.addListener('account_error', ({ message }) => { console.error(message); });
-        player.addListener('playback_error', ({ message }) => { console.error(message); });
+  <div class="stock-options">
+  </div>
+  
+<div class="gains">
 
-        //status updates
-        player.addListener('player_state_changed', state => { console.log(state); });
+</div>
+	<div class="graph-container">
+    
+	</div>
 
-        //Ready
-        player.addListener('ready', ({ device_id }) => {
-            console.log('Ready with Device ID', device_id);
-        });
 
-        //Not Ready
-        player.addListener('not_ready', ({ device_id }) => {
-            console.log('Device ID has gone offline', device_id);
-        });
 
-        //connect to the player
-        player.connect();
-    };
-</script>
+
+
+
+	<script src="index.js"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
 </body>
+
 </html>
