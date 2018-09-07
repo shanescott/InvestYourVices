@@ -36,7 +36,7 @@ let dataset = [];
 
 $(document).ready(function () {
   choices.forEach(function (choice) {
-    $('.choice-list').append(`<li class="list-images" data-choice="${choice}"><img src="./Images/${choice}.png"/></li>`);
+    $('.choice-list').append(`<li class="list-images" data-choice="${choice}"><img src="Images/${choice}.png"/></li>`);
   });
 
   $('.choice-list').on('click', 'li', function (event) {
