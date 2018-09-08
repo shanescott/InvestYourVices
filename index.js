@@ -41,7 +41,7 @@ $(document).ready(function () {
 
   $('.choice-list').on('click', 'li', function (event) {
     let choice = $(this).attr('data-choice')
-    $('.choice-list').empty().append($(`<li class="list-images" data-choice="${choice}"><img src="/Images/${choice}.png"/></li>`));
+    $('.choice-list').empty().append($(`<li class="list-images" data-choice="${choice}"><img src="Images/${choice}.png"/></li>`));
     $('.logo-container').empty().append(`<h1>Select a stock option below</h1>`)
     $('.stock-options').append(`<button class="tickerBtn" data-selection="AAPL">AAPL</button><button class="tickerBtn" data-selection="PYPL">PYPL</button><button class="tickerBtn" data-selection="GOOGL">GOOGL</button><button class="tickerBtn" data-selection="FB">FB</button>`);
     // $('.graph-container').append($(`<img src="https://docs.oracle.com/javafx/2/charts/img/line-order.png"/>`)).hide().fadeIn(1000);
