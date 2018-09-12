@@ -28,6 +28,13 @@
    display: flex;
    justify-content: center;
   }
+
+  .choice-made {
+    display: none;
+  }
+  .stock-options {
+    display: none;
+  }
   
   
   ul {

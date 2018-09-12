@@ -1,37 +1,43 @@
 'use strict';
 
 
-const choices = ['starbucks', 'fast food', 'micro', 'coke', 'beer', 'cigarettes'];
+const choices = ['starbucks', 'fastFood', 'micro', 'coke', 'beer', 'cigarettes'];
 
 const viceCosts = [
   {
     name: 'starbucks',
+    label: 'Starbucks Coffee',
     cost: 5,
   },
   {
-    name: 'fast food',
+    name: 'fastFood',
+    label: 'Fast Food',
     cost: 8,
   },
   {
     name: 'microtransactions',
+    label: 'Micro-Transactions',
     cost: 20,
   },
   {
     name: 'coke',
+    label: 'Soft Drinks',
     cost: 2,
   },
   {
     name: 'beer',
+    label: 'Beer',
     cost: 6,
   },
   {
     name: 'cigarettes',
+    label: 'Cigarettes',
     cost: 10,
   },
 ];
 
 const w = 700;
-const h = 500;
+let h;
 let dataset = [];
 
 $(document).ready(function () {
@@ -40,16 +46,23 @@ $(document).ready(function () {
   });
 
   $('.choice-list').on('click', 'li', function (event) {
-    let choice = $(this).attr('data-choice')
-    $('.choice-list').empty().append($(`<li class="list-images" data-choice="${choice}"><img src="Images/${choice}.png"/></li>`));
-    $('.logo-container').empty().append(`<h1>Select a stock option below</h1>`)
-    $('.stock-options').append(`<button class="tickerBtn" data-selection="AAPL">AAPL</button><button class="tickerBtn" data-selection="PYPL">PYPL</button><button class="tickerBtn" data-selection="GOOGL">GOOGL</button><button class="tickerBtn" data-selection="FB">FB</button>`);
+    let choice = $(this).attr('data-choice');
+    $('.choice-image').html(`<img src="Images/${choice}.png"/></li>`);
+    $('.choice-list').hide();
+    $('.choice-made').show();
+    $('.stock-options').show();
+   // $('.choice-list').empty().append($(`<li class="list-images" data-choice="${choice}"><img src="Images/${choice}.png"/></li>`));
+   // $('.logo-container').empty().append(`<h1>Select a stock option below</h1>`)
+  // $('.stock-options').append(`<button class="tickerBtn" data-selection="AAPL">AAPL</button><button class="tickerBtn" data-selection="PYPL">PYPL</button><button class="tickerBtn" data-selection="GOOGL">GOOGL</button><button class="tickerBtn" data-selection="FB">FB</button>`);
     // $('.graph-container').append($(`<img src="https://docs.oracle.com/javafx/2/charts/img/line-order.png"/>`)).hide().fadeIn(1000);
     //placeholder img of stock chart while I learn D3!!!
 
     $('.stock-options').on('click', 'button', function (event) {
       event.preventDefault();
       let tickerSelection = $(this).attr('data-selection');
+      $('svg').remove();
+      $('rect').remove();
+      dataset = [];
       $('.logo-container').empty()
       $.getJSON(`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${tickerSelection}&datatype=json&apikey=FA5ZDI5DSTULG7FP`)
         .done(function (response) {
@@ -71,9 +84,12 @@ $(document).ready(function () {
           console.log(stockChoiceStart);
           console.log(stockChoiceFin);
           let viceYearlyCost = 0;
+          let label = "";
           viceCosts.forEach(function (item, index) {
-            if (item.name === choice)
+            if (item.name === choice){
               viceYearlyCost = (item.cost * 365);
+              label = item.label;
+            }
 
           });
           console.log(viceYearlyCost);
@@ -82,8 +98,20 @@ $(document).ready(function () {
           let finalGain = (initialShares * stockChoiceFin) - viceYearlyCost;
           finalGain = finalGain.toFixed(0);
           
-          $('.logo-container').append(`<h2>Spending money on ${choice} may not seem like much at the time, but a years worth of ${choice} adds up to $${viceYearlyCost}! </h2>`);
-          $('.gains').append(`<h2>If you took a year worth of ${choice} and invested in ${tickerSelection} your profits in 1 year would have been $${finalGain}</h2><h3>Vice cost per year $${viceYearlyCost}. Initial shares you can purchase, ${initialShares} at $${stockChoiceStart} each. Shares sold after 1 year at $${stockChoiceFin} each</h3>`);
+          $('.logo-container').html(`<h2>Spending money on ${label} may not seem like much at the time, but a years worth of ${label} adds up to $${viceYearlyCost}! </h2>`);
+          $('.gains').html(`<h2>If you took a year worth of ${label} and invested in ${tickerSelection} your profits in 1 year would have been $${finalGain}</h2><h3>Vice cost per year $${viceYearlyCost}. Initial shares you can purchase, ${initialShares} at $${stockChoiceStart} each. Shares sold after 1 year at $${stockChoiceFin} each</h3>`);
+
+          let largestNumber = 0;
+          for (let i = 0; i < dataset.length; i++) {
+            if(parseInt(dataset[i]) > largestNumber){
+              console.log('dataset:'+dataset[i]);
+              largestNumber = parseInt(dataset[i]);
+            }
+            
+          }
+
+          h = parseInt(largestNumber*2) + 100;
+
 
           let svg = d3.select('.graph-container')
             .append('svg')
@@ -108,14 +136,10 @@ $(document).ready(function () {
             .enter()
             .append("text")
             .text((d) => d)
-            .attr("x", (d, i) => i * 95)
-            .attr("y", (d, i) => h - (d * 2) - 2);
+            .attr("x", (d, i) => i * 80 + 25)
+            .attr("y", (d, i) => h - (d * 2) - 10);
             
-          //viceYearlyCost = user's choice's cost * 365. Then use viceYearlyCost in your equations to find their investment gains
-
-          //viceYearlyCost / stockChoiceStart = X
-
-          //X * stockChoiceFin = totalMoney; totalMoney - viceYearlyCost = investmentGain
+          
 
         });
 
