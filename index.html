@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<title>repl.it</title>
+	<link href="animate.css" rel="stylesheet" type="text/css" />
 	<link href="index.css" rel="stylesheet" type="text/css" />
 	<link href="https://fonts.googleapis.com/css?family=Raleway:300" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -12,15 +13,29 @@
 </head>
 
 <body>
-	<header class="logo-container">
-		<h1>See what your daily spending could earn you in the stock market</h1>
-		<h2>Below you will find daily "vices", pick yours and we'll show you how much you could've made in the last year with popular stocks!</h2>
+
+	<div class="bannerArea">
+		<div class="colorOverlay animated fadeIn slowDown">
+			<div class="container">
+				<div class="heroText animated fadeInLeft slowDown">
+
+					<h1>Invest your Vices</h1>
+					<p>Turn your bad spending habits into real money</p>
+
+				</div>
+			</div>
+		</div>	
+	</div>
+	<header class="logo-container animated slideInUp slowDown">
+		<h1>We'll show you just how much your daily spending is costing you</h1>
+		<h2>Click on one of the following vices you throw money at every day</h2>
+		<small class="choice-descriptions">Coffee, Fast Food, Microtransactions, Soda, Beer, Cigarettes</small>
 	</header>
-	<div class="choices-container js-choices-container">
+	<div class="choices-container js-choices-container animated bounceInLeft slowDown">
 		<ul class="choice-list"></ul>
 		<div class="choice-made">
 			<p class="choice-image"></p>
-			<h1>Select a stock option below</h1>
+			<h1 class="stock-select">Select a stock option below</h1>
 			
 		</div>
 	</div>
@@ -35,11 +50,9 @@
 	<div class="graph-container">
     
 	</div>
-
-
-
-
-
+	<div class="graph-description">
+		
+	</div> 
 
 	<script src="index.js"></script>
   <script src="https://d3js.org/d3.v5.min.js"></script>

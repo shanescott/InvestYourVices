@@ -2,14 +2,61 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: white;
+    /* background-color: white; */
     font-family: 'Raleway', sans-serif;
   }
+
+ .bannerArea {
+    height: 500px;
+    background-color: #f5f5f5;
+    background-image: url("./LayoutImg/piggybank.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+ }
+
+  .colorOverlay {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,.5);
+  }
+
+  .bannerArea .container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .heroText h1{
+    text-align: center;
+    color: white;
+    font-size: 60px;
+    font-weight: 900;
+  }
   
+  .heroText{
+    color: #fff;
+  }
+  
+  .heroText p{
+    text-align: center;
+    font-weight: 100;
+    font-size: 25px;
+  }
+  
+  .logo-container {
+    margin-bottom: 15px;
+
+
+  }
+
   h1 {
     text-align: center;
     color: #248BBB;
-    margin-top: 15px;
+    margin-top: 25px;
     font-size: 60px;
   }
   
@@ -27,6 +74,10 @@
     flex-wrap: wrap;
    display: flex;
    justify-content: center;
+  }
+
+  .tickerBtn {
+    margin-top: 5px;
   }
 
   .choice-made {
@@ -48,7 +99,12 @@
     margin-right: 15px;
     
   }
-  
+
+  .choice-descriptions {
+    display: block;
+    text-align: center;
+  }
+
   .list-images {
     height: 250px;
     width: 250px;
@@ -77,7 +133,6 @@
     width: 200px;
     font-size: 25px; 
     background: linear-gradient(to bottom, #0e98d8, #268ab8);
-    
     border-radius: 3px;
     border: 1px solid #0e98d8;
     color: white;
@@ -88,9 +143,14 @@
     justify-content: center;
     margin-top: 20px;
     margin-bottom: 20px;
-    border: solid black  3px;
     border-radius: 10px;
     color: white
+  }
+
+  .graph-description {
+    text-align: center;
+    font-size: smaller;
+    margin-bottom: 15px;
   }
   
   .bars {
@@ -103,3 +163,30 @@
   .gains {
     text-align: center;
   }
+.choice-image {
+  text-align: center;
+}
+  .choice-image img {
+
+    height: 250px;
+    width: 250px;
+  }
+
+  .slowDown {
+    -webkit-animation-duration: 1s;
+    -moz-animation-duration: 1s;
+    -o-animation-duration: 1s;
+    -ms-animation-duration: 1s;
+    animation-duration: 1s;
+  }
+
+  .quick {
+    -webkit-animation-duration: .5s;
+    -moz-animation-duration: .5s;
+    -o-animation-duration: .5s;
+    -ms-animation-duration: .5s;
+    animation-duration: .5s;
+
+  }
+
+  /* Responsive Queries */

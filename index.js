@@ -40,28 +40,55 @@ const w = 700;
 let h;
 let dataset = [];
 
+var animationEnd = (function(el) {
+  var animations = {
+    animation: 'animationend',
+    OAnimation: 'oAnimationEnd',
+    MozAnimation: 'mozAnimationEnd',
+    WebkitAnimation: 'webkitAnimationEnd',
+  };
+
+  for (var t in animations) {
+    if (el.style[t] !== undefined) {
+      return animations[t];
+    }
+  }
+})(document.createElement('div'));
+
+function removeHero() {
+  $('.bannerArea').hide();
+
+} ;
+
+
 $(document).ready(function () {
   choices.forEach(function (choice) {
     $('.choice-list').append(`<li class="list-images" data-choice="${choice}"><img src="Images/${choice}.png"/></li>`);
+    $('.stock-options').hide();
   });
 
   $('.choice-list').on('click', 'li', function (event) {
     let choice = $(this).attr('data-choice');
     $('.choice-image').html(`<img src="Images/${choice}.png"/></li>`);
     $('.choice-list').hide();
+    $('.choice-made').hide();
     $('.choice-made').show();
     $('.stock-options').show();
-   // $('.choice-list').empty().append($(`<li class="list-images" data-choice="${choice}"><img src="Images/${choice}.png"/></li>`));
-   // $('.logo-container').empty().append(`<h1>Select a stock option below</h1>`)
-  // $('.stock-options').append(`<button class="tickerBtn" data-selection="AAPL">AAPL</button><button class="tickerBtn" data-selection="PYPL">PYPL</button><button class="tickerBtn" data-selection="GOOGL">GOOGL</button><button class="tickerBtn" data-selection="FB">FB</button>`);
-    // $('.graph-container').append($(`<img src="https://docs.oracle.com/javafx/2/charts/img/line-order.png"/>`)).hide().fadeIn(1000);
-    //placeholder img of stock chart while I learn D3!!!
+    $('.logo-container').html(`<h1>Time to Invenst</h1>`);
+    $('.bannerArea').addClass('animated fadeOut quick');
+    $('.bannerArea').one(animationEnd, removeHero);
 
     $('.stock-options').on('click', 'button', function (event) {
       event.preventDefault();
       let tickerSelection = $(this).attr('data-selection');
+      $('.graph-description').html('<p>Bar graph represents January - December stock prices</p>');
+      
+      
+      
       $('svg').remove();
       $('rect').remove();
+      
+      
       dataset = [];
       $('.logo-container').empty()
       $.getJSON(`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${tickerSelection}&datatype=json&apikey=FA5ZDI5DSTULG7FP`)
@@ -99,7 +126,7 @@ $(document).ready(function () {
           finalGain = finalGain.toFixed(0);
           
           $('.logo-container').html(`<h2>Spending money on ${label} may not seem like much at the time, but a years worth of ${label} adds up to $${viceYearlyCost}! </h2>`);
-          $('.gains').html(`<h2>If you took a year worth of ${label} and invested in ${tickerSelection} your profits in 1 year would have been $${finalGain}</h2><h3>Vice cost per year $${viceYearlyCost}. Initial shares you can purchase, ${initialShares} at $${stockChoiceStart} each. Shares sold after 1 year at $${stockChoiceFin} each</h3>`);
+          $('.gains').html(`<h2>If you took a years worth of ${label} and invested it in ${tickerSelection} your profits in 1 year would have been $${finalGain}!</h2><h3>${label} cost per year is $${viceYearlyCost}. Initial shares you can purchase, ${initialShares} at $${stockChoiceStart} each. Shares sold after 1 year at $${stockChoiceFin} each</h3>`);
 
           let largestNumber = 0;
           for (let i = 0; i < dataset.length; i++) {
