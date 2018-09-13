@@ -36,7 +36,7 @@ const viceCosts = [
   },
 ];
 
-const w = 700;
+const w = 1200;
 let h;
 let dataset = [];
 
@@ -61,14 +61,19 @@ function removeHero() {
 } ;
 
 
-$(document).ready(function () {
-  choices.forEach(function (choice) {
-    $('.choice-list').append(`<li class="list-images" data-choice="${choice}"><img src="Images/${choice}.png"/></li>`);
-    $('.stock-options').hide();
-  });
+let choice = '';
 
+function renderPage() {
+  choices.forEach(function (choice) {
+     $('.choice-list').append(`<li class="list-images" data-choice="${choice}"><img src="Images/${choice}.png"/></li>`);
+     $('.stock-options').hide();
+     handleSelection();
+  });
+}
+
+function handleSelection() {
   $('.choice-list').on('click', 'li', function (event) {
-    let choice = $(this).attr('data-choice');
+    choice = $(this).attr('data-choice');
     $('.choice-image').html(`<img src="Images/${choice}.png"/></li>`);
     $('.choice-list').hide();
     $('.choice-made').hide();
@@ -76,40 +81,48 @@ $(document).ready(function () {
     $('.stock-options').show();
     $('.logo-container').html(`<h1>Time to Invenst</h1>`);
     $('.bannerArea').addClass('animated fadeOut quick');
-    $('.bannerArea').one(animationEnd, removeHero);
+    $('.bannerArea').one(animationEnd, removeHero); 
+  });
 
+  handleTickers();
+}
+
+let tickerSelection = '';
+
+function handleTickers () {
     $('.stock-options').on('click', 'button', function (event) {
       event.preventDefault();
-      let tickerSelection = $(this).attr('data-selection');
+      tickerSelection = $(this).attr('data-selection');
       $('.graph-description').html('<p>Bar graph represents January - December stock prices</p>');
-      
-      
-      
       $('svg').remove();
       $('rect').remove();
-      
-      
-      dataset = [];
+      getApiData();
+    });
+}
+
+
+dataset = [];
+
+function getApiData () {
       $('.logo-container').empty()
-      $.getJSON(`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${tickerSelection}&datatype=json&apikey=FA5ZDI5DSTULG7FP`)
+      $.getJSON(`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${tickerSelection}&datatype=json&apikey=BFB8YNNRYCS9QWNQ`)
         .done(function (response) {
           let jsonData = response;
+          console.log(jsonData);
           const rmts = jsonData['Monthly Time Series'];
           dataset.push(jsonData['Monthly Time Series']['2017-01-31']['4. close'], rmts['2017-02-28']['4. close'], rmts['2017-03-31']['4. close'], rmts['2017-04-28']['4. close'], rmts['2017-05-31']['4. close'], rmts['2017-06-30']['4. close'], rmts['2017-07-31']['4. close'], rmts['2017-08-31']['4. close'], rmts['2017-09-29']['4. close'], rmts['2017-10-31']['4. close'], rmts['2017-11-30']['4. close'], rmts['2017-12-29']['4. close']);
-          console.log(dataset);
+         
           let x = 0;
           let len = dataset.length;
           while (x < len) {
             dataset[x] = parseFloat(dataset[x]).toFixed(0);
             x++
           }
-
+        
           let stockChoiceStart = response['Monthly Time Series']['2017-01-31']['4. close'];
           stockChoiceStart = parseFloat(stockChoiceStart).toFixed(0);
           let stockChoiceFin = response['Monthly Time Series']['2018-01-31']['4. close'];
           stockChoiceFin = parseFloat(stockChoiceFin).toFixed(0);
-          console.log(stockChoiceStart);
-          console.log(stockChoiceFin);
           let viceYearlyCost = 0;
           let label = "";
           viceCosts.forEach(function (item, index) {
@@ -119,7 +132,6 @@ $(document).ready(function () {
             }
 
           });
-          console.log(viceYearlyCost);
          let initialShares = viceYearlyCost / stockChoiceStart;
           initialShares = initialShares.toFixed(0);
           let finalGain = (initialShares * stockChoiceFin) - viceYearlyCost;
@@ -131,7 +143,6 @@ $(document).ready(function () {
           let largestNumber = 0;
           for (let i = 0; i < dataset.length; i++) {
             if(parseInt(dataset[i]) > largestNumber){
-              console.log('dataset:'+dataset[i]);
               largestNumber = parseInt(dataset[i]);
             }
             
@@ -139,14 +150,17 @@ $(document).ready(function () {
 
           h = parseInt(largestNumber*2) + 100;
 
+        });
+        handleGraph();
+      };
 
-          let svg = d3.select('.graph-container')
+function handleGraph() {
+
+  let svg = d3.select('.graph-container')
             .append('svg')
             .attr('height', h)
             .attr('width', w);
             
-
-
           svg.selectAll('rect')
             .data(dataset)
             .enter()
@@ -157,7 +171,6 @@ $(document).ready(function () {
             .attr("y", (d, i) => h - (d * 2))
             .attr('class', 'bars');
           
-
           svg.selectAll("text")
             .data(dataset)
             .enter()
@@ -165,16 +178,11 @@ $(document).ready(function () {
             .text((d) => d)
             .attr("x", (d, i) => i * 80 + 25)
             .attr("y", (d, i) => h - (d * 2) - 10);
-            
-          
-
-        });
+}
+    
 
 
-    });
-  });
-});
-
+$(renderPage);
 
 
 
