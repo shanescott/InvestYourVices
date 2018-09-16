@@ -1,7 +1,7 @@
 'use strict';
 
 
-const choices = ['starbucks', 'fastFood', 'micro', 'coke', 'beer', 'cigarettes'];
+const choices = ['starbucks', 'fastFood', 'microtransactions', 'coke', 'beer', 'cigarettes'];
 
 const viceCosts = [
   {
@@ -36,36 +36,20 @@ const viceCosts = [
   },
 ];
 
-const w = 1200;
+const w = 1000;
+
 let h;
+
 let dataset = [];
 
-var animationEnd = (function(el) {
-  var animations = {
-    animation: 'animationend',
-    OAnimation: 'oAnimationEnd',
-    MozAnimation: 'mozAnimationEnd',
-    WebkitAnimation: 'webkitAnimationEnd',
-  };
-
-  for (var t in animations) {
-    if (el.style[t] !== undefined) {
-      return animations[t];
-    }
-  }
-})(document.createElement('div'));
-
-function removeHero() {
-  $('.bannerArea').hide();
-
-} ;
-
-
 let choice = '';
+
+let userSelection = '';
 
 function renderPage() {
   choices.forEach(function (choice) {
      $('.choice-list').append(`<li class="list-images" data-choice="${choice}"><img src="Images/${choice}.png"/></li>`);
+     $('choice-made').hide();
      $('.stock-options').hide();
      handleSelection();
   });
@@ -79,24 +63,29 @@ function handleSelection() {
     $('.choice-made').hide();
     $('.choice-made').show();
     $('.stock-options').show();
-    $('.logo-container').html(`<h1>Time to Invenst</h1>`);
-    $('.bannerArea').addClass('animated fadeOut quick');
-    $('.bannerArea').one(animationEnd, removeHero); 
-  });
+    $('.logo-container').html(`<h1>You've Selected ${userSelection}</h1>`);
+    $('.bannerArea').hide();
 
+    viceCosts.forEach(function (item, index) {
+      if (item.name === choice){
+        userSelection = item.label;
+      }
+    });
+
+  });
+  
   handleTickers();
+  goBack();
 }
 
 let tickerSelection = '';
 
 function handleTickers () {
     $('.stock-options').on('click', 'button', function (event) {
-      event.preventDefault();
-      tickerSelection = $(this).attr('data-selection');
-      $('.graph-description').html('<p>Bar graph represents January - December stock prices</p>');
-      $('svg').remove();
-      $('rect').remove();
-      getApiData();
+    tickerSelection = $(this).attr('data-selection');
+    $('.graph-description').html('<p>Bar graph represents January - December stock prices in $USD</p>');
+    
+    getApiData();
     });
 }
 
@@ -105,10 +94,9 @@ dataset = [];
 
 function getApiData () {
       $('.logo-container').empty()
-      $.getJSON(`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${tickerSelection}&datatype=json&apikey=BFB8YNNRYCS9QWNQ`)
+      $.getJSON(`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${tickerSelection}&datatype=json&apikey=7SGRMU6L5ATDS0W1`)
         .done(function (response) {
           let jsonData = response;
-          console.log(jsonData);
           const rmts = jsonData['Monthly Time Series'];
           dataset.push(jsonData['Monthly Time Series']['2017-01-31']['4. close'], rmts['2017-02-28']['4. close'], rmts['2017-03-31']['4. close'], rmts['2017-04-28']['4. close'], rmts['2017-05-31']['4. close'], rmts['2017-06-30']['4. close'], rmts['2017-07-31']['4. close'], rmts['2017-08-31']['4. close'], rmts['2017-09-29']['4. close'], rmts['2017-10-31']['4. close'], rmts['2017-11-30']['4. close'], rmts['2017-12-29']['4. close']);
          
@@ -148,20 +136,39 @@ function getApiData () {
             
           }
 
-          h = parseInt(largestNumber*2) + 100;
-
+          h = parseInt(largestNumber * 2) + 100;
+          handleGraph();
         });
-        handleGraph();
+        
       };
 
 function handleGraph() {
+  $('.graph-description').show();
+  $('.gains').show();
+  $('svg').remove();
+    $('rect').remove();
+    let dLength = dataset.length;
+    if (dLength > 12) {dataset.splice(0, dLength - 12);}
+  
 
   let svg = d3.select('.graph-container')
             .append('svg')
             .attr('height', h)
             .attr('width', w);
             
-          svg.selectAll('rect')
+if (tickerSelection === 'AMZN') {
+    svg.selectAll('rect')
+      .data(dataset)
+      .enter()
+      .append('rect')
+      .attr("height", (d, i) => `${d * 2}px`)
+      .attr("width", 50)
+      .attr("x", (d, i) => i * 80)
+      .attr("y", (d, i) => h - (d * 2))
+      .attr('class', 'bars');
+}
+else {
+  svg.selectAll('rect')
             .data(dataset)
             .enter()
             .append('rect')
@@ -170,6 +177,9 @@ function handleGraph() {
             .attr("x", (d, i) => i * 80)
             .attr("y", (d, i) => h - (d * 2))
             .attr('class', 'bars');
+}
+
+          
           
           svg.selectAll("text")
             .data(dataset)
@@ -179,8 +189,22 @@ function handleGraph() {
             .attr("x", (d, i) => i * 80 + 25)
             .attr("y", (d, i) => h - (d * 2) - 10);
 }
-    
 
+function goBack () {
+  $('.choice-made').on('click', 'button', function (event) {
+    console.log('back button is registering the click');
+    $('svg').remove();
+    $('rect').remove();
+    dataset = [];
+    $('.choice-made').hide();
+    $('.stock-options').hide();
+    $('.choice-list').show();
+    $('.gains').hide();
+    $('.graph-description').hide();
+    $('.logo-container').html(`<h1>Click on one of the following vices you throw money at every day</h1>`);
+    
+  });
+}
 
 $(renderPage);
 

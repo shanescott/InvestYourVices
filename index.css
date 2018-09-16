@@ -57,6 +57,7 @@
     text-align: center;
     color: #248BBB;
     margin-top: 25px;
+    margin-bottom: 15px;
     font-size: 60px;
   }
   
@@ -82,12 +83,12 @@
 
   .choice-made {
     display: none;
+    text-align: center;
   }
   .stock-options {
     display: none;
   }
-  
-  
+    
   ul {
     list-style: none;
     padding: 5px;
@@ -103,6 +104,7 @@
   .choice-descriptions {
     display: block;
     text-align: center;
+    font-size: 20px;
   }
 
   .list-images {
@@ -127,6 +129,7 @@
   }
   
   .stock-options > button {
+    cursor: pointer;
     margin-right: 10px;
     text-align: center;
     vertical-align: center;
@@ -134,8 +137,29 @@
     font-size: 25px; 
     background: linear-gradient(to bottom, #0e98d8, #268ab8);
     border-radius: 3px;
+    box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
     border: 1px solid #0e98d8;
     color: white;
+  }
+
+  .backBtn {
+    cursor: pointer;
+    margin-top: 15px;
+    text-align: center;
+    vertical-align: center;
+    width: 200px;
+    font-size: 25px; 
+    background: linear-gradient(to bottom, #0e98d8, #268ab8);
+    border-radius: 3px;
+    border: 1px solid #0e98d8;
+    box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
+    color: white;
+
+  }
+
+  button:hover {
+    background: linear-gradient(to bottom, #00aeff, #0e98d8);
+    
   }
   
   .graph-container {
@@ -173,11 +197,11 @@
   }
 
   .slowDown {
-    -webkit-animation-duration: 1s;
-    -moz-animation-duration: 1s;
-    -o-animation-duration: 1s;
-    -ms-animation-duration: 1s;
-    animation-duration: 1s;
+    -webkit-animation-duration: 2s;
+    -moz-animation-duration: 2s;
+    -o-animation-duration: 2s;
+    -ms-animation-duration: 2s;
+    animation-duration: 2s;
   }
 
   .quick {
@@ -190,3 +214,9 @@
   }
 
   /* Responsive Queries */
+
+  @media (hover: hover) {
+    button:hover {
+      animation: pulse .5s;
+    }
+  }
