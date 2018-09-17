@@ -134,7 +134,7 @@ function getApiData() {
       }
       h = parseInt(largestNumber * 2) + 100;
       handleGraph();
-      pageScroll();
+      
     });
 };
 
@@ -178,11 +178,6 @@ function handleGraph() {
     }
 
   });
-}
-
-function pageScroll() {
- window.scrollBy(0,1);
-  scrolldelay = setTimeout(pageScroll,10);
 }
 
 function goBack() {
