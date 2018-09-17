@@ -65,7 +65,7 @@ function handleSelection() {
     $('.choice-made').show();
     $('.stock-options').show();
     let userSelection = '';
-    userSelection = ${choice};
+    userSelection = `${choice}`;
     let upperCaseChoice = userSelection.toUpperCase();
     $('.logo-container').html(`<h1>YOU'VE SELECTED ${upperCaseChoice}</h1>`);
     $('.bannerArea').hide();
