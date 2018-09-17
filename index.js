@@ -134,11 +134,12 @@ function getApiData() {
       }
       h = parseInt(largestNumber * 2) + 100;
       handleGraph();
-      
+      $('html, body').animate({scrollTop:$(document).height()}, 'slow');
     });
 };
 
 function handleGraph() {
+  $('html, body').animate({scrollTop:$(document).height()}, 'slow'); 
   $('.graph-description').show();
   $('.gains').show();
   $('.graph-container').html(`<canvas id="myChart"></canvas>`);
