@@ -160,10 +160,12 @@ function handleGraph() {
         backgroundColor: 'rgb(37, 139, 187)',
         borderColor: 'rgb(37, 139, 187)',
         data: dataset,
-        update: 0,
+        
       }]
     },
     options: {
+      animation: false,
+      update: 0,
       maintainAspectRation: false,
       scales: {
         yAxes: [{
