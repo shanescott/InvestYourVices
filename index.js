@@ -138,8 +138,13 @@ function getApiData() {
     });
 };
 
+let scrollOptions = {
+  top: 100,
+  left: 0,
+  behavior: instant,
+};
 function handleGraph() {
-  window.scrollBy(0, 100);
+  window.scrollBy(scrollOptions);
   $('.graph-description').show();
   $('.gains').show();
   $('.graph-container').html(`<canvas id="myChart"></canvas>`);
