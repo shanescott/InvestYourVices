@@ -56,7 +56,7 @@ function renderPage() {
 }
 
 function handleSelection() {
-  $('.choice-list').on('click keydown', 'li', function (event) {
+  $('.choice-list').on('click keypress', 'li', function (event) {
     event.preventDefault();
     choice = $(this).attr('data-choice');
     $('.choice-image').html(`<img src="Images/${choice}.png"/></li>`);
