@@ -139,7 +139,9 @@ function getApiData() {
 };
 
 function handleGraph() {
-  $('html, body').animate({scrollTop:$(document).height()}, 'slow'); 
+  document.querySelector('.graph-container').scrollIntoView({ 
+  behavior: 'smooth' 
+});
   $('.graph-description').show();
   $('.gains').show();
   $('.graph-container').html(`<canvas id="myChart"></canvas>`);
