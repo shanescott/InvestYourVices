@@ -65,6 +65,7 @@ function handleSelection() {
     $('.choice-made').show();
     $('.stock-options').show();
     let userSelection = '';
+    userSelection = ${choice};
     let upperCaseChoice = userSelection.toUpperCase();
     $('.logo-container').html(`<h1>YOU'VE SELECTED ${upperCaseChoice}</h1>`);
     $('.bannerArea').hide();
@@ -133,6 +134,7 @@ function getApiData() {
       }
       h = parseInt(largestNumber * 2) + 100;
       handleGraph();
+      pageScroll();
     });
 };
 
@@ -176,6 +178,11 @@ function handleGraph() {
     }
 
   });
+}
+
+function pageScroll() {
+ window.scrollBy(0,1);
+  scrolldelay = setTimeout(pageScroll,10);
 }
 
 function goBack() {
