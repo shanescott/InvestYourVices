@@ -10,6 +10,7 @@
 	<link href="index.css" rel="stylesheet" type="text/css" />
 	<link href="https://fonts.googleapis.com/css?family=Raleway:300" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 
 </head>
 
@@ -20,7 +21,7 @@
 			<div class="container">
 				<div class="heroText animated fadeInLeft slowDown">
 
-					<h1>Invest your Vices</h1>
+					<h1>INVEST YOUR VICES</h1>
 					<p>Turn your bad spending habits into real money</p>
 
 				</div>
@@ -28,7 +29,7 @@
 		</div>
 	</header>
 	<div class="logo-container animated fadeIn slowDown">
-		<h1>We'll show you just how much your daily spending is costing you</h1>
+		<h2>We'll show you just how much your daily spending is costing you</h2>
 		<h2>Click on one of the following vices you throw money at every day</h2>
 		<p class="choice-descriptions">Coffee, Fast Food, Microtransactions, Soda, Beer, Cigarettes</p>
 	</div>
@@ -36,26 +37,29 @@
 		<ul class="choice-list"></ul>
 		<div class="choice-made">
 			<p class="choice-image"></p>
-			<button class="backBtn">Change Selection</button>
-			<h1 class="stock-select">Select a stock option below</h1>
+			<button class="backBtn">CHANGE SELECTION</button>
+			<h1 class="stock-select">SELECT A STOCK OPTION BELOW</h1>
 
 		</div>
 	</main>
 
 	<div class="stock-options">
-		<button class="tickerBtn" data-selection="AAPL">Apple</button><button class="tickerBtn" data-selection="PYPL">Paypal</button><button
-		 class="tickerBtn" data-selection="ATVI">Blizzard Games</button><button class="tickerBtn" data-selection="FB">Facebook</button>
+		<button class="tickerBtn" data-selection="AAPL">APPLE</button><button class="tickerBtn" data-selection="PYPL">PAYPAL</button><button
+		 class="tickerBtn" data-selection="ATVI">BLIZZARD GAMES</button><button class="tickerBtn" data-selection="FB">FACEBOOK</button>
 	</div>
 
 	<div class="gains">
 
 	</div>
-	<div class="graph-container">
+	
 
-	</div>
-	<div class="graph-description">
-
-	</div>
+	
+	 <div class="centerGraph"> 
+		<div class="graph-container">
+			
+		</div>
+		
+	</div> 
 
 	<script src="index.js"></script>
 	<script src="https://d3js.org/d3.v5.min.js"></script>

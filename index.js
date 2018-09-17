@@ -15,7 +15,7 @@ const viceCosts = [
   },
   {
     name: 'microtransactions',
-    label: 'Micro-Transactions',
+    label: 'Microtransactions',
     cost: 20,
     alt: 'Mario holding coins',
   },
@@ -39,7 +39,7 @@ const viceCosts = [
   },
 ];
 
-const w = 1000;
+let w = $(window).width();
 
 let h;
 
@@ -49,11 +49,14 @@ let choice = '';
 
 let userSelection = '';
 
+const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
 function renderPage() {
   viceCosts.forEach(function (item, choice) {
     $('.choice-list').append(`<li class="list-images" data-choice="${item.name}"><img src="Images/${item.name}.png" alt="${item.alt}"/></li>`);
     $('choice-made').hide();
     $('.stock-options').hide();
+    $('.graph-container').hide();
     handleSelection();
   });
 }
@@ -66,7 +69,8 @@ function handleSelection() {
     $('.choice-made').hide();
     $('.choice-made').show();
     $('.stock-options').show();
-    $('.logo-container').html(`<h1>You've Selected ${userSelection}</h1>`);
+    let upperCaseChoice = userSelection.toUpperCase();
+    $('.logo-container').html(`<h1>YOU'VE SELECTED ${upperCaseChoice}</h1>`);
     $('.bannerArea').hide();
 
     viceCosts.forEach(function (item, index) {
@@ -86,8 +90,7 @@ let tickerSelection = '';
 function handleTickers() {
   $('.stock-options').on('click', 'button', function (event) {
     tickerSelection = $(this).attr('data-selection');
-    $('.graph-description').html('<p>Bar graph represents January - December stock prices in $USD</p>');
-
+    $('.graph-container').show();
     getApiData();
   });
 }
@@ -130,7 +133,7 @@ function getApiData() {
       let totalMoney = parseInt(finalGain) + parseInt(viceYearlyCost);
 
 
-      $('.logo-container').html(`<h2>Spending money on ${label} may not seem like much at the time, but a years worth of ${label} adds up to $${viceYearlyCost}! </h2>`);
+      $('.logo-container').html(`<h2>Spending money on ${label} may not seem like much at the time,</br> but a year's worth adds up to $${viceYearlyCost}! </h2>`);
       $('.gains').html(`<h2>If you took a years worth of ${label} and invested it in ${tickerSelection} your profits in 1 year would have been $${finalGain}!</h2><h3>${label} cost per year is $${viceYearlyCost}. Initial shares you can purchase, ${initialShares} at $${stockChoiceStart} each. Shares sold after 1 year at $${stockChoiceFin} each. </br>That brings your total to $${totalMoney}! </h3>`);
 
       let largestNumber = 0;
@@ -150,61 +153,83 @@ function getApiData() {
 function handleGraph() {
   $('.graph-description').show();
   $('.gains').show();
-  $('svg').remove();
-  $('rect').remove();
+
+  $('.graph-container').html(`<canvas id="myChart"></canvas>`);
+  // $('svg').remove();
+  // $('rect').remove();
   let dLength = dataset.length;
   if (dLength > 12) { dataset.splice(0, dLength - 12); }
 
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let chart = new Chart(ctx, {
+    type: 'bar',
+    
+    data: {
+      labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      datasets: [{
+        label: "Stock Performance Jan - Dec 2017",
+              backgroundColor: 'rgb(37, 139, 187)',
+              borderColor: 'rgb(37, 139, 187)',
+              data: dataset,
+      }]
+    },
+    options: {
+      maintainAspectRation: false,
+      scales: {
+        yAxes: [{
+          stacked: true,
+          gridlines: {
+            display: true,
+            color: "rgb(37, 139, 187)",
+            }
+          }],
+          xAxes: [{
+            gridLines: {
+              display: false
+            }
+          }]
+        }
+      }
+      
+  });
+  // let svg = d3.select('.graph-container')
+  //   .append('svg')
+  //   .attr('height', h)
+  //   .attr('width', w);
+    
+  
+  //   svg.selectAll('rect')
+  //     .data(dataset)
+  //     .enter()
+  //     .append('rect')
+  //     .attr("height", (d, i) => `${d * 2}px`)
+  //     .attr("width", 25)
+  //     .attr("x", (d, i) => i * 80)
+  //     .attr("y", (d, i) => h - (d - 10))
+  //     .attr('class', 'bars');
+  
 
-  let svg = d3.select('.graph-container')
-    .append('svg')
-    .attr('height', h)
-    .attr('width', w);
+  // svg.selectAll("text")
+  //   .data(dataset)
+  //   .enter()
+  //   .append("text")
+  //   .text((d) => d)
+  //   .attr("x", (d, i) => i * 80 + 25)
+  //   .attr("y", (d, i) => h - (d - 10) - 10);
 
-  if (tickerSelection === 'AMZN') {
-    svg.selectAll('rect')
-      .data(dataset)
-      .enter()
-      .append('rect')
-      .attr("height", (d, i) => `${d * 2}px`)
-      .attr("width", 50)
-      .attr("x", (d, i) => i * 80)
-      .attr("y", (d, i) => h - (d * 2))
-      .attr('class', 'bars');
+    
+    
   }
-  else {
-    svg.selectAll('rect')
-      .data(dataset)
-      .enter()
-      .append('rect')
-      .attr("height", (d, i) => `${d * 2}px`)
-      .attr("width", 50)
-      .attr("x", (d, i) => i * 80)
-      .attr("y", (d, i) => h - (d * 2))
-      .attr('class', 'bars');
-  }
 
-
-
-  svg.selectAll("text")
-    .data(dataset)
-    .enter()
-    .append("text")
-    .text((d) => d)
-    .attr("x", (d, i) => i * 80 + 25)
-    .attr("y", (d, i) => h - (d * 2) - 10);
-}
 
 function goBack() {
   $('.choice-made').on('click', 'button', function (event) {
-    $('svg').remove();
-    $('rect').remove();
     dataset = [];
     $('.choice-made').hide();
     $('.stock-options').hide();
     $('.choice-list').show();
     $('.gains').hide();
-    $('.graph-description').hide();
+    $('.graph-container').hide();
     $('.logo-container').html(`<h1>Click on one of the following vices you throw money at every day</h1>`);
 
   });

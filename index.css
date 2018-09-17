@@ -7,7 +7,7 @@
   }
 
  .bannerArea {
-    height: 500px;
+    height: 400px;
     background-color: #f5f5f5;
     background-image: url("./LayoutImg/piggybank.jpg");
     background-repeat: no-repeat;
@@ -33,7 +33,7 @@
   .heroText h1{
     text-align: center;
     color: white;
-    font-size: 60px;
+    font-size: 70px;
     font-weight: 900;
   }
   
@@ -49,8 +49,6 @@
   
   .logo-container {
     margin-bottom: 15px;
-
-
   }
 
   h1 {
@@ -58,7 +56,7 @@
     color: #248BBB;
     margin-top: 25px;
     margin-bottom: 15px;
-    font-size: 60px;
+    font-size: 50px;
   }
   
   h2 {
@@ -66,15 +64,14 @@
     color: #248BBB;
     margin-top: 30px;
     margin-bottom: 30px;
-    font-size: 25px;
-  
+    font-size: 35px;
   }
   
   .choices-container {
     width: 100%;
     flex-wrap: wrap;
-   display: flex;
-   justify-content: center;
+    display: flex;
+    justify-content: center;
   }
 
   .tickerBtn {
@@ -85,6 +82,7 @@
     display: none;
     text-align: center;
   }
+
   .stock-options {
     display: none;
   }
@@ -98,7 +96,6 @@
   li {
     display: inline-block;
     margin-right: 15px;
-    
   }
 
   .choice-descriptions {
@@ -112,14 +109,12 @@
     width: 250px;
     overflow: hidden;
     cursor:pointer;
-  
   }
   
   .list-images img {
     height: 250px;
     width: 250px;
     padding: 10px;
-    
   }
   
   .stock-options {
@@ -133,8 +128,9 @@
     margin-right: 10px;
     text-align: center;
     vertical-align: center;
-    width: 200px;
+    width: 300px;
     font-size: 25px; 
+    padding: 15px;
     background: linear-gradient(to bottom, #0e98d8, #268ab8);
     border-radius: 3px;
     box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
@@ -148,13 +144,13 @@
     text-align: center;
     vertical-align: center;
     width: 200px;
-    font-size: 25px; 
+    font-size: 20px; 
     background: linear-gradient(to bottom, #0e98d8, #268ab8);
     border-radius: 3px;
     border: 1px solid #0e98d8;
     box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
     color: white;
-
+    
   }
 
   button:hover {
@@ -163,30 +159,39 @@
   }
   
   .graph-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    color: white
+    position: relative;
+    margin: auto;
+    height: 60vh;
+    width: 80vw;
   }
 
   .graph-description {
     text-align: center;
-    font-size: smaller;
-    margin-bottom: 15px;
+    font-size: 15px;
+    color: black;
+    margin-top: 15px;
+    margin-bottom: 5px;
   }
-  
+ 
   .bars {
-    fill: #0e98d8
+    fill: #0e98d8;
   }
+
   svg text {
     font-size: 25px;
     text-anchor: middle;
   }
+
+  .centerGraph {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;  
+  }
+
   .gains {
     text-align: center;
   }
+
 .choice-image {
   text-align: center;
 }
@@ -215,8 +220,81 @@
 
   /* Responsive Queries */
 
-  @media (hover: hover) {
+@media (hover: hover) {
     button:hover {
       animation: pulse .5s;
     }
   }
+
+@media only screen and (min-width: 320px) and (max-width: 640px) {
+  .bannerArea {
+    height: 200px;
+  }
+  
+  .list-images {
+    height: 125px;
+    width: 125px;
+    overflow: hidden;
+    cursor:pointer;
+  }
+  
+  .list-images img {
+    height: 125px;
+    width: 125px;
+    padding: 5px;
+  }
+
+  .choice-image > img {
+    height: 125px;
+    width: 125px;
+  }
+  .heroText h1 {
+    font-size:25px; 
+  }
+  .heroText > p{
+    font-size: 12.5px;
+  }
+  h1 {
+    font-size: 25px;
+    
+  }
+  h2 {
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  .choice-descriptions > p {
+    font-size: 2px;
+    padding: 10px;
+  }
+
+  h3 {
+    font-size: 10px;
+    padding: 5px;
+  }
+
+  li {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  .stock-options > button {
+    width: fit-content;
+    font-size: 20px;
+    align-self: center;
+  }
+  .stock-options {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-content: center;
+  }
+
+  .stock-select {
+    padding: 10px;
+    margin-bottom: 2px;
+  }
+  .stock-select > h1 {
+    font-size: 20px;
+    
+  }
+}
