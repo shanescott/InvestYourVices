@@ -133,13 +133,19 @@ function getApiData() {
         }
       }
       h = parseInt(largestNumber * 2) + 100;
+      
+      scrollToGraph();
       handleGraph();
-      $('html, body').animate({scrollTop:$(document).height()}, 'slow');
     });
 };
 
+function scrollToGraph() {
+  $('html, body').animate( {
+    scrollTop: $('.centerGraph').offset().top }, 200);
+}
+
 function handleGraph() {
-  window.scrollBy(0, 100);
+  
   $('.graph-description').show();
   $('.gains').show();
   $('.graph-container').html(`<canvas id="myChart"></canvas>`);
