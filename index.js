@@ -16,7 +16,7 @@ const vices = [
   {
     name: 'microtransactions',
     label: 'Microtransactions',
-    cost: 20,
+    cost: 2,
     alt: 'Mario holding coins',
   },
   {
@@ -68,7 +68,7 @@ function handleSelection() {
     userSelection = `${choice}`;
     let upperCaseChoice = userSelection.toUpperCase();
     $('.logo-container').html(`<h1>YOU'VE SELECTED ${upperCaseChoice}</h1>`);
-    $('.bannerArea').hide();
+    //$('.bannerArea').hide();
 
     vices.forEach(function (item, index) {
       if (item.name === choice) {
@@ -133,7 +133,7 @@ function getApiData() {
         }
       }
       h = parseInt(largestNumber * 2) + 100;
-      
+
       scrollToGraph();
       handleGraph();
     });
@@ -141,7 +141,7 @@ function getApiData() {
 
 function scrollToGraph() {
   $('html, body').animate( {
-    scrollTop: $('.centerGraph').offset().top }, 200);
+    scrollTop: $('.centerGraph').offset().top }, );
 }
 
 function handleGraph() {

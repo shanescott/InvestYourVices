@@ -189,8 +189,16 @@ button:focus {
   justify-content: center;  
 }
 
+.gaincontainer {
+  display: flex;
+  justify-content: center;
+  
+  
+}
 .gains {
   text-align: center;
+  width: 70%;
+  
 }
 
 
@@ -271,6 +279,13 @@ li {
   margin-right: 5px;
   margin-left: 5px;
 }
+
+.stock-options-container {
+  display: flex;
+  justify-content: center;
+  width: 70%;
+}
+
 .stock-options > button {
   width: fit-content;
   font-size: 20px;
